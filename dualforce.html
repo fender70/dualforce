@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DualForce | Flexible & Affordable Home Development</title>
+    <style>
+        /* --- CSS VARIABLES & PALETTE --- */
+        :root {
+            /* Your Requested Palette */
+            --gold-main: #e6a212;
+            --bg-dark: #1f1f1f;
+            --gold-light: #f0b63b;
+            --gold-dark: #b7810e;
+            --bg-card: #383838;
+            --bg-black: #050505;
+            
+            /* Text & Utilities */
+            --text-light: #ffffff;
+            --text-gray: #dddddd;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-gray);
+            line-height: 1.6;
+            background-color: var(--bg-dark); /* Dark Theme Background */
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        /* --- UTILITY CLASSES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--gold-main);
+            color: var(--bg-black);
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover { 
+            background-color: var(--gold-light); 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 162, 18, 0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: var(--gold-main);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--bg-black);
+            border-bottom: 2px solid var(--gold-dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px; /* Slightly taller for logo */
+        }
+
+        /* LOGO STYLING */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 10px 0;
+        }
+        
+        .logo-img {
+            max-height: 70px; /* Adjust this based on your logo's aspect ratio */
+            width: auto;
+            /* In case the image is missing, this styles the alt text */
+            color: var(--gold-main); 
+            font-weight: bold;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-links a:hover { color: var(--gold-main); }
+
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; color: var(--gold-main); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            /* Darkened overlay to make text pop */
+            background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(31, 31, 31, 0.7)), url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2531&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+        .hero-content span { color: var(--gold-main); }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #ccc;
+        }
+
+        /* --- FINANCING BANNER --- */
+        .financing-banner {
+            background-color: var(--gold-main);
+            color: var(--bg-black);
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .financing-banner h2 { 
+            margin-bottom: 10px; 
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+        .financing-banner p { font-size: 1.2rem; font-weight: 600; }
+
+        /* --- SERVICES SECTION --- */
+        .services { padding: 80px 0; background-color: var(--bg-dark); }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: var(--bg-card); /* Lighter grey card */
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+            border: 1px solid #444;
+        }
+        
+        .service-card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--gold-main);
+        }
+        
+        .service-img {
+            height: 200px;
+            background-color: #000;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(20%); /* Artistic touch */
+            transition: 0.3s;
+        }
+        .service-card:hover .service-img { filter: grayscale(0%); }
+
+        .service-info { padding: 25px; }
+        .service-info h3 { margin-bottom: 10px; color: var(--gold-light); font-size: 1.4rem; }
+        .service-info p { font-size: 0.95rem; color: #ccc; margin-bottom: 15px; }
+        
+        .service-tag {
+            display: inline-block;
+            background: var(--bg-black);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--gold-main);
+            margin-top: 10px;
+            border: 1px solid var(--gold-dark);
+        }
+
+        /* --- COMMERCIAL MANAGEMENT --- */
+        .commercial { padding: 80px 0; background-color: var(--bg-black); }
+        .commercial-layout {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+        }
+        .comm-text { flex: 1; }
+        .comm-text h2 { color: var(--gold-main); font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase;}
+        
+        .comm-img { 
+            flex: 1; 
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2532&auto=format&fit=crop') center/cover;
+            border-radius: 4px;
+            border: 2px solid var(--gold-dark);
+        }
+        
+        .comm-list { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .comm-list li { display: flex; align-items: center; color: var(--text-gray); }
+        .comm-list li::before {
+            content: "➤";
+            color: var(--gold-main);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+
+        /* --- ABOUT/VALUES --- */
+        .values { padding: 60px 0; background-color: var(--bg-card); text-align: center; border-top: 1px solid var(--gold-dark); border-bottom: 1px solid var(--gold-dark); }
+        .values h2 { color: var(--white); margin-bottom: 40px; }
+        .values-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
+        .value-item { max-width: 300px; }
+        .value-icon { font-size: 3rem; margin-bottom: 20px; color: var(--gold-main); }
+        .value-item h3 { color: var(--gold-light); margin-bottom: 10px; }
+
+        /* --- CONTACT --- */
+        .contact { padding: 80px 0; background-color: var(--bg-dark); }
+        .contact-container {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #444;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--gold-main); }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: var(--text-light);
+            font-family: inherit;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold-main);
+        }
+
+        .contact-info { margin-top: 40px; text-align: center; border-top: 1px solid #555; padding-top: 30px; }
+        .contact-info strong { color: var(--gold-main); font-size: 1.2rem; }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-black);
+            color: #777;
+            padding: 50px 0 20px;
+            text-align: center;
+            border-top: 3px solid var(--gold-dark);
+        }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .footer-links a { color: var(--text-gray); }
+        .footer-links a:hover { color: var(--gold-main); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-black);
+                padding: 20px;
+                border-bottom: 2px solid var(--gold-main);
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+            .commercial-layout { flex-direction: column; }
+            .comm-img { width: 100%; height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo-container">
+                <img src="noBgColor.png" alt="DualForce Logo" class="logo-img" style="display: block;"> 
+                
+                <span style="margin-left:10px; font-weight:bold; color:var(--gold-main); display:none;">DUALFORCE</span> 
+            </a>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#commercial">Commercial</a></li>
+                <li><a href="#financing">Financing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Transform Unutilized<br>Spaces Into <span>Assets</span></h1>
+            <p>Flexible and affordable home renovation services. Create functional suites or get market-ready with financing up to 20 years.</p>
+            <a href="#contact" class="btn">Get a Free Estimate</a>
+        </div>
+    </section>
+
+    <section class="financing-banner" id="financing">
+        <div class="container">
+            <h2>Flexible Financing Available</h2>
+            <p>Ease the burden of renovation costs with payment plans extending up to 20 years.</p>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Residential Services</h2>
+            <p class="section-subtitle">Whether you are looking to generate income or prepare for a sale, we have the expertise to make it happen.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2669&auto=format&fit=crop');"></div>
+                    <div class="service-info">
+                        <h3>Basement Development</h3>
+                        <p>Turn that dark storage space into a functional family room or a legal income-generating suite.</p>
+                        <span class="service-tag">Income Suites</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1484154218962-a1c002085d2f?q=80&w=2671&auto=format&fit=crop');"></div>
+                    <div class="service-info">
+                        <h3>Market Ready Renovations</h3>
+                        <p>Strategic updates to maximize your home's value before you list it on the market.</p>
+                        <span class="service-tag">Pre-Sale</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=2574&auto=format&fit=crop');"></div>
+                    <div class="service-info">
+                        <h3>Kitchen & Bath</h3>
+                        <p>Modernize the most important rooms in your house with flexible design options.</p>
+                        <span class="service-tag">Renovation</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1591825729269-caeb344f6df2?q=80&w=2670&auto=format&fit=crop');"></div>
+                    <div class="service-info">
+                        <h3>Decks & Fences</h3>
+                        <p>Enhance your curb appeal and outdoor living space with custom builds.</p>
+                        <span class="service-tag">Exterior</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="commercial" id="commercial">
+        <div class="container">
+            <div class="commercial-layout">
+                <div class="comm-text">
+                    <h2>Building Management</h2>
+                    <p style="margin-bottom: 20px;">We don't just handle homes. DualForce offers comprehensive maintenance services for commercial buildings. Keep your property running smoothly with our expert repair teams.</p>
+                    <ul class="comm-list">
+                        <li>Electrical Repairs</li>
+                        <li>Plumbing Services</li>
+                        <li>HVAC Maintenance</li>
+                        <li>Furnace Repair</li>
+                        <li>Water Tank Service</li>
+                        <li>General Maintenance</li>
+                    </ul>
+                </div>
+                <div class="comm-img"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values">
+        <div class="container">
+            <h2>Why Choose DualForce?</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">★</div>
+                    <h3>Affordability</h3>
+                    <p>We believe renovation shouldn't break the bank. Our pricing is competitive and transparent.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">∞</div>
+                    <h3>Flexibility</h3>
+                    <p>From payment terms to project timelines, we adapt to fit your specific needs and schedule.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">✔</div>
+                    <h3>Quality</h3>
+                    <p>Whether it's a quick fix or a full suite development, we deliver professional craftsmanship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get Your Free Quote</h2>
+            <div class="contact-container">
+                <form>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Needed</label>
+                        <select>
+                            <option>Basement Development</option>
+                            <option>Market Ready Renovation</option>
+                            <option>Kitchen/Bath Renovation</option>
+                            <option>Building Management</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="5" placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Send Request</button>
+                </form>
+                <div class="contact-info">
+                    <p><strong>DualForce Contracting</strong></p>
+                    <p>Email: contact@dualforce.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#commercial">Commercial</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2024 DualForce Contracting. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
